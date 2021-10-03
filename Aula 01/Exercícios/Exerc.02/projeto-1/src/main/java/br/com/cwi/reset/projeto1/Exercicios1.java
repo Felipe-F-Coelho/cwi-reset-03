@@ -47,9 +47,23 @@ public class Exercicios1 {
     }
 
     public List<Integer> ordenarLista(List<Integer> numeros) {
-        List<int> ordenacão = new ArrayList<>();
+        List<Integer> ordenacão = new ArrayList<>();
+        int aux = 0;
 
-        
+        for(int num : numeros){
+            ordenacão.add(num);
+        }
+
+        for(int i = 0; i < ordenacão.size(); i++){
+            for (int j = i+1; j < ordenacão.size(); j++){
+                if(ordenacão.get(j) < ordenacão.get(i)){
+                    aux = ordenacão.get(j);
+
+                    ordenacão.set(j, ordenacão.get(i));
+                    ordenacão.set(i, aux);
+                }
+            }
+        }
 
         return ordenacão;
     }
