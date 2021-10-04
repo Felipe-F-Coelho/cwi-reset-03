@@ -8,7 +8,7 @@ public class RelacaoPesoPreco {
         }
 
         if ("torta".equals(item)) {
-            precoTotal = 96.00 * (qtd / 16);
+            precoTotal = qtd * (96.00 / 16);
         }
 
         if ("leite".equals(item)) {
