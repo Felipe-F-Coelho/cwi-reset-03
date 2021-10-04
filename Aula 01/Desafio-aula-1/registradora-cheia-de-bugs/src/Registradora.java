@@ -2,10 +2,10 @@
 public class Registradora {
 
     public static void main(String[] args) {
-//        primeiroBug();
+        primeiroBug();
 
-        segundoBug();
-
+//        segundoBug();
+//
 //        terceiroBug();
 //
 //        quartoBug();
