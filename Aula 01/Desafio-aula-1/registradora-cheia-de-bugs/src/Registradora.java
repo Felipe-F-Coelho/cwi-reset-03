@@ -3,20 +3,21 @@ public class Registradora {
 
     public static void main(String[] args) {
 //        primeiroBug();
-
+//
 //        segundoBug();
 //
 //        terceiroBug();
 //
-//        quartoBug();
+        quartoBug();
 //
-        quintoBug();
+//        quintoBug();
 //
 //        sextoBug();
     }
 
     private static double registrarItem(String item, int quantidade) {
         double precoItem = RelacaoPesoPreco.retornaPrecoProduto(item, quantidade);
+        System.out.println(ItensPorQuantidade.getSanduiche());
 
         if (QuantidadeMinimaItem.precisaReposicao(item)) {
             if ("pao".equals(item) || "sanduiche".equals(item) || "torta".equals(item)) {

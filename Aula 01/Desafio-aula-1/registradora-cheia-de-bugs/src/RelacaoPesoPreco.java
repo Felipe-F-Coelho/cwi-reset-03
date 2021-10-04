@@ -5,22 +5,19 @@ public class RelacaoPesoPreco {
 
         if ("pao".equals(item)) {
             precoTotal = (12.75 * 0.06) * qtd;
-        }
-
-        if ("torta".equals(item)) {
+            ItensPorQuantidade.setPao(ItensPorQuantidade.getPao() - qtd);
+        }else if ("torta".equals(item)) {
             precoTotal = qtd * (96.00 / 16);
-        }
-
-        if ("leite".equals(item)) {
+            ItensPorQuantidade.setTorta(ItensPorQuantidade.getTorta() - qtd);
+        }else if ("leite".equals(item)) {
             precoTotal = 4.48 * qtd;
-        }
-
-        if ("cafe".equals(item)) {
+            ItensPorQuantidade.setLeite(ItensPorQuantidade.getLeite() - qtd);
+        }else if ("cafe".equals(item)) {
             precoTotal = 9.56 * qtd;
-        }
-
-        if ("sanduiche".equals(item)) {
+            ItensPorQuantidade.setCafe(ItensPorQuantidade.getCafe() - qtd);
+        }else if ("sanduiche".equals(item)) {
             precoTotal = 4.5 * qtd;
+            ItensPorQuantidade.setSanduiche(ItensPorQuantidade.getSanduiche() - qtd);
         }
 
         return precoTotal;
