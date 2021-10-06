@@ -2,31 +2,33 @@
 public class Registradora {
 
     public static void main(String[] args) {
-//        primeiroBug();
-//
-//        segundoBug();
-//
-//        terceiroBug();
-//
-//        quartoBug();
-//
-//        quintoBug();
-//
+        primeiroBug();
+
+//        segundoBug();           //precisa ajustar a quantidade de torta enviada para o cliente, em estoque sai a torta inteira.
+
+        terceiroBug();           // realizar compra de produtos ou reposição da cozinha nos produtos solicitados além da quantidade minima.
+
+        quartoBug();
+
+        quintoBug();
+
         sextoBug();
     }
 
     private static double registrarItem(String item, int quantidade) {
 
-        if (QuantidadeMinimaItem.precisaReposicao(item)) {
+        QuantidadeMinimaItem.verificacaoQuantidade(item,quantidade);
+
+        if (QuantidadeMinimaItem.quantidadeSelecionada < quantidade) {
             if ("pao".equals(item) || "sanduiche".equals(item) || "torta".equals(item)) {
-                if (!DataProjeto.cozinhaEmFuncionamento() && ItensPorQuantidade.verificacaoQuantidade(item,quantidade)) {
+                if (!DataProjeto.cozinhaEmFuncionamento() && QuantidadeMinimaItem.verificacaoQuantidade(item,quantidade)) {
                     System.out.println("Cozinha fechada!");
-                    System.out.println("Reposição indisponível de " + item +" quantidade restante em estoque é de " + ItensPorQuantidade.quantidadeSelecionada);
-                }else{
+                    System.out.println("Reposição indisponível de " + item +" quantidade restante em estoque é de " + QuantidadeMinimaItem.quantidadeSelecionada);
+                }else if(QuantidadeMinimaItem.precisaReposicao(item, quantidade)){
                     ReposicaoCozinha.reporItem(item);
                 }
-            }else if("leite".equals(item) || "cafe".equals(item)) {
-                ReposicaoFornecedor.reporItem(item);
+            }else if(("leite".equals(item) || "cafe".equals(item)) && QuantidadeMinimaItem.precisaReposicao(item, quantidade)) {
+                    ReposicaoFornecedor.reporItem(item);
             }
         }
 
