@@ -7,9 +7,7 @@ public class ReposicaoFornecedor {
 
         if ("leite".equals(item)) {
             ItensPorQuantidade.setLeite(ItensPorQuantidade.getLeite() + random.nextInt(40) + 10);
-        }
-
-        if ("cafe".equals(item)) {
+        }else if ("cafe".equals(item)) {
             ItensPorQuantidade.setCafe(ItensPorQuantidade.getCafe() + random.nextInt(40) + 10);
         }
     }

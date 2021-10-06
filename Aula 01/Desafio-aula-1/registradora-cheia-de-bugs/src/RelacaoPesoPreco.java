@@ -3,19 +3,19 @@ public class RelacaoPesoPreco {
     public static double retornaPrecoProduto(String item, int qtd) {
         double precoTotal = 0;
 
-        if ("pao".equals(item)) {
+        if ("pao".equals(item) && !ItensPorQuantidade.verificacaoQuantidade(item,qtd)) {
             precoTotal = (12.75 * 0.06) * qtd;
             ItensPorQuantidade.setPao(ItensPorQuantidade.getPao() - qtd);
-        }else if ("torta".equals(item)) {
+        }else if ("torta".equals(item) && !ItensPorQuantidade.verificacaoQuantidade(item,qtd)) {
             precoTotal = qtd * (96.00 / 16);
-            ItensPorQuantidade.setTorta(ItensPorQuantidade.getTorta() - qtd);
-        }else if ("leite".equals(item)) {
+            ItensPorQuantidade.setTorta(ItensPorQuantidade.getTorta() - (qtd / 16));
+        }else if ("leite".equals(item) && !ItensPorQuantidade.verificacaoQuantidade(item,qtd)) {
             precoTotal = 4.48 * qtd;
             ItensPorQuantidade.setLeite(ItensPorQuantidade.getLeite() - qtd);
-        }else if ("cafe".equals(item)) {
+        }else if ("cafe".equals(item) && !ItensPorQuantidade.verificacaoQuantidade(item,qtd)) {
             precoTotal = 9.56 * qtd;
             ItensPorQuantidade.setCafe(ItensPorQuantidade.getCafe() - qtd);
-        }else if ("sanduiche".equals(item)) {
+        }else if ("sanduiche".equals(item) && !ItensPorQuantidade.verificacaoQuantidade(item,qtd)) {
             precoTotal = 4.5 * qtd;
             ItensPorQuantidade.setSanduiche(ItensPorQuantidade.getSanduiche() - qtd);
         }

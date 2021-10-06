@@ -45,4 +45,27 @@ public class ItensPorQuantidade {
     public static void setPao(int pao) {
         ItensPorQuantidade.pao = pao;
     }
+
+    static int quantidadeSelecionada = 0;
+
+    public static boolean verificacaoQuantidade(String item, int quantidade) {
+        boolean verificacao = false;
+        if ("paes".equals(item) && quantidade > getPao()) {
+            verificacao = true;
+            quantidadeSelecionada = getPao();
+        } else if ("torta".equals(item) && quantidade > getTorta()) {
+            verificacao = true;
+            quantidadeSelecionada = getTorta();
+        } else if ("sanduiche".equals(item) && quantidade > getSanduiche()) {
+            verificacao = true;
+            quantidadeSelecionada = getSanduiche();
+        } else if ("leite".equals(item) && quantidade > getLeite()) {
+            verificacao = true;
+            quantidadeSelecionada = getLeite();
+        } else if ("cafe".equals(item) && quantidade > getCafe()) {
+            verificacao = true;
+            quantidadeSelecionada = getCafe();
+        }
+        return verificacao;
+    }
 }
