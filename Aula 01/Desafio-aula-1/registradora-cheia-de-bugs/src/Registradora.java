@@ -2,17 +2,17 @@
 public class Registradora {
 
     public static void main(String[] args) {
-        primeiroBug();
+//        primeiroBug();
 
-//        segundoBug();           //precisa ajustar a quantidade de torta enviada para o cliente, em estoque sai a torta inteira.
+        segundoBug();           //precisa ajustar a quantidade de torta enviada para o cliente, em estoque sai a torta inteira.
 
-        terceiroBug();           // realizar compra de produtos ou reposição da cozinha nos produtos solicitados além da quantidade minima.
+//        terceiroBug();
 
-        quartoBug();
+//        quartoBug();
 
-        quintoBug();
+//        quintoBug();
 
-        sextoBug();
+//        sextoBug();
     }
 
     private static double registrarItem(String item, int quantidade) {
