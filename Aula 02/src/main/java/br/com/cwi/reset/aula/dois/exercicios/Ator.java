@@ -16,7 +16,7 @@ public class Ator {
     public void apresentacao(){
         System.out.println("Ator: " + this.nome);
         System.out.println("Idade: " + this.idade);
-        System.out.println("Genero: " + this.genero);
+        System.out.println("Genero: " + genero.getDescricao());
         System.out.println("");
     }
 }
