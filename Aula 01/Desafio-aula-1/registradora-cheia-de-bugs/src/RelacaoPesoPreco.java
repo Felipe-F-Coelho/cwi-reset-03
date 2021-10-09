@@ -5,7 +5,7 @@ public class RelacaoPesoPreco {
 
         if ("pao".equals(item) && !QuantidadeMinimaItem.verificacaoQuantidade(item,qtd)) {
             precoTotal = (12.75 * 0.06) * qtd;
-            ItensPorQuantidade.setPao(ItensPorQuantidade.getPao() - qtd);
+            ItensPorQuantidade.setPao(ItensPorQuantidade.getPao() - (qtd *  60));
         }else if ("torta".equals(item) && !QuantidadeMinimaItem.verificacaoQuantidade(item,qtd)) {
             precoTotal = qtd * (96.00 / 16);
             ItensPorQuantidade.setTorta(ItensPorQuantidade.getTorta() - qtd);

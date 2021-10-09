@@ -4,7 +4,7 @@ public class Registradora {
     public static void main(String[] args) {
 //        primeiroBug();
 
-        segundoBug();           //precisa ajustar a quantidade de torta enviada para o cliente, em estoque sai a torta inteira.
+//        segundoBug();
 
 //        terceiroBug();
 
