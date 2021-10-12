@@ -1,11 +1,11 @@
 package br.com.cwi.reset.felipecoelho;
 
-import java.text.DateFormat;
+import java.time.LocalDate;
 
-public class Diretor {
-    private Integer id;
-    private String nome;
-    private DateFormat dataDeNacimento;
-    private Integer anoInicioAtividade;
+public class Diretor extends Funcionario {
+
+    public Diretor(Integer id, String nome, LocalDate dataDeNacimento, Integer anoInicioAtividade) {
+        super(id, nome, dataDeNacimento, anoInicioAtividade);
+    }
 }
 

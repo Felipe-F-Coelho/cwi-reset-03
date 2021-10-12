@@ -16,6 +16,7 @@ public class FakeDatabase {
         return atores;
     }
 
+
     public void persisteDiretor(Diretor diretor) {
         diretores.add(diretor);
     }

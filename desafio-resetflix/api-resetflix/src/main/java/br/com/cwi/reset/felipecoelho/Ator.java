@@ -1,11 +1,14 @@
 package br.com.cwi.reset.felipecoelho;
 
-import java.text.DateFormat;
+import java.time.LocalDate;
 
-public class Ator {
-    private Integer id;
-    private String nome;
-    private DateFormat dataDeNacimento;
+public class Ator extends Funcionario {
+
     private StatusCarreira statusCarreira;
-    private Integer anoInicioAtividade;
+
+    public Ator(Integer id, String nome, LocalDate dataDeNacimento , StatusCarreira statusCarreira, Integer anoInicioAtividade) {
+        super(id, nome, dataDeNacimento, anoInicioAtividade);
+        this.statusCarreira = statusCarreira;
+    }
+
 }

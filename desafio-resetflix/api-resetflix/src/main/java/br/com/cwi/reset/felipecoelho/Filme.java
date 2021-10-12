@@ -1,5 +1,7 @@
 package br.com.cwi.reset.felipecoelho;
 
+import java.util.List;
+
 public class Filme {
     private Integer id;
     private String nome;
@@ -7,6 +9,6 @@ public class Filme {
     private String capaFilme;
     private Genero genero;
     private Diretor diretor;
-    private PersonagemAtor personagens;
+    private List<PersonagemAtor> personagens;
     private String resumo;
 }
