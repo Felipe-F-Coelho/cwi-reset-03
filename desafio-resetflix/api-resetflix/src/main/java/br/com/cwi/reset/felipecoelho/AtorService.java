@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 public class AtorService {
 
     private FakeDatabase fakeDatabase;
-    private static Integer idSequencia = 0;
     private Integer id;
 
     public Integer getId() {
@@ -32,7 +31,7 @@ public class AtorService {
             validarDatadeNascimento(atorRequest.getDataNascimento());
             validarAnoNascimento(atorRequest.getDataNascimento(),atorRequest.getAnoInicioAtividade());
             campoObrigatorio(atorRequest.getNome(),atorRequest.getDataNascimento(),atorRequest.getStatusCarreira(),atorRequest.getAnoInicioAtividade());
-            this.id = idSequencia++;
+            this.id = fakeDatabase.solicitarID();
             Ator newAtor = new Ator(this.id, atorRequest.getNome(), atorRequest.getDataNascimento(),atorRequest.getStatusCarreira(),atorRequest.getAnoInicioAtividade());
             fakeDatabase.persisteAtor(newAtor);
         }catch (CampoObrigatorioException | NomeSobrenomeException | DataDeNascimentoException | AnoNascimentoException | CadastroNomesIguaisException e){
@@ -101,11 +100,30 @@ public class AtorService {
         return dadosAtor.get(0);
     }
 
+    public List<Ator> consultarAtores(){
+        List<Ator> atores = new ArrayList<>();
+
+        try{
+            atores = fakeDatabase.recuperaAtores();
+            nenhumAtorEncontrado(atores);
+        } catch (NenhumAtorEncontradoException e) {
+            e.printStackTrace();
+        }
+
+        return atores;
+    }
+
         // Metodos para gerar Excepetions
+
+    private void nenhumAtorEncontrado(List<Ator> atores) throws NenhumAtorEncontradoException {
+        if(atores.isEmpty()){
+            throw new NenhumAtorEncontradoException();
+        }
+    }
 
     private void idNaoEncontrado(List<Ator> dadosAtor, Integer id) throws AtorNaoEncontradoException {
 
-        if(dadosAtor.size() == 0){
+        if(dadosAtor.isEmpty()){
             throw new AtorNaoEncontradoException(id);
         }
     }
