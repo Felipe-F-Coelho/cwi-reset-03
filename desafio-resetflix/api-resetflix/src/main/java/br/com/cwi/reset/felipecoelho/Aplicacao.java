@@ -19,9 +19,21 @@ public class Aplicacao {
 
         atorService.criarAtor(atorRequest);
 
+        nome = "Felipe Coelho";
+        dataNascimento = LocalDate.of(1993, Month.SEPTEMBER, 29);
+        statusCarreira = StatusCarreira.EM_ATIVIDADE;
+        anoInicioAtividade = 2002;
+        AtorRequest atorRequest1 = new AtorRequest(nome, dataNascimento, statusCarreira, anoInicioAtividade);
+
+        atorService.criarAtor(atorRequest1);
+
         List<Ator> atores = fakeDatabase.recuperaAtores();
 
         System.out.println("Deve conter 1 ator, quantidade encontrada: " + atores.size());
         System.out.println("Primeiro ator deve ser 'Will Smith', valor encontrado: " + atores.get(0).getNome());
+
+//        System.out.println(atorService.listarAtoresEmAtividade("Felipe").get(0).getNome());
+
+        System.out.println(atorService.consultarAtor(1).getNome());
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 public class Filme {
     private Integer id;
     private String nome;
-    private Integer InanoLancamento;
+    private Integer anoLancamento;
     private String capaFilme;
     private Genero genero;
     private Diretor diretor;

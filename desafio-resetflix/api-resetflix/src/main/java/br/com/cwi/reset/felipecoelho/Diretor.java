@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public class Diretor extends Funcionario {
 
-    public Diretor(Integer id, String nome, LocalDate dataDeNacimento, Integer anoInicioAtividade) {
-        super(id, nome, dataDeNacimento, anoInicioAtividade);
+    public Diretor(Integer id, String nome, LocalDate dataDeNascimento, Integer anoInicioAtividade) {
+        super(id, nome, dataDeNascimento, anoInicioAtividade);
     }
 }
 
