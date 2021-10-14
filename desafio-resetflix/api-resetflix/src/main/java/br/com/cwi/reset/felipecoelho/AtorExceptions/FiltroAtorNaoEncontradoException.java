@@ -1,4 +1,4 @@
-package br.com.cwi.reset.felipecoelho;
+package br.com.cwi.reset.felipecoelho.AtorExceptions;
 
 public class FiltroAtorNaoEncontradoException extends Exception{
     public FiltroAtorNaoEncontradoException(String filtro) {

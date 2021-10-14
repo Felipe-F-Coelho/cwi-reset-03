@@ -1,5 +1,7 @@
 package br.com.cwi.reset.felipecoelho;
 
+import br.com.cwi.reset.felipecoelho.AtorExceptions.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

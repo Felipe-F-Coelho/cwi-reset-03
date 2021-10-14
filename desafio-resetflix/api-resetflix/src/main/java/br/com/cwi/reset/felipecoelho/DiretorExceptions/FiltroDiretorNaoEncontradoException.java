@@ -1,4 +1,4 @@
-package br.com.cwi.reset.felipecoelho;
+package br.com.cwi.reset.felipecoelho.DiretorExceptions;
 
 public class FiltroDiretorNaoEncontradoException extends Exception{
     public FiltroDiretorNaoEncontradoException(String filtro) {

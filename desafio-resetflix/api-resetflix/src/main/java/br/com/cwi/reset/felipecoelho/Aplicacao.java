@@ -38,7 +38,7 @@ public class Aplicacao {
 
         System.out.println("Deve filtrar ator cadastrado (filtro: Fel): " + atorService.listarAtoresEmAtividade("Fel").get(0).getNome());
 
-        System.out.println("Deve consultar o ator pelo id(1): " + atorService.consultarAtor(2).getNome());
+        System.out.println("Deve consultar o ator pelo id(2): " + atorService.consultarAtor(2).getNome());
 
         System.out.println("Deve consultar todos os atores (consulta 0 na data de nascimento): " + atorService.consultarAtores().get(0).getDataDeNascimento());
 

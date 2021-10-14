@@ -1,4 +1,4 @@
-package br.com.cwi.reset.felipecoelho;
+package br.com.cwi.reset.felipecoelho.DiretorExceptions;
 
 public class DiretorNaoEncontradoException extends Exception{
     public DiretorNaoEncontradoException(Integer id) {
