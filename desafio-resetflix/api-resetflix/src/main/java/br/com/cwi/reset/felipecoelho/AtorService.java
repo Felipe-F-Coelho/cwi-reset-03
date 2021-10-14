@@ -34,7 +34,7 @@ public class AtorService {
             this.id = fakeDatabase.solicitarID();
             Ator newAtor = new Ator(this.id, atorRequest.getNome(), atorRequest.getDataNascimento(),atorRequest.getStatusCarreira(),atorRequest.getAnoInicioAtividade());
             fakeDatabase.persisteAtor(newAtor);
-        }catch (CampoObrigatorioException | NomeSobrenomeException | DataDeNascimentoException | AnoNascimentoException | CadastroNomesIguaisException e){
+        }catch (CampoObrigatorioException | NomeSobrenomeAtorException | DataDeNascimentoAtorException | AnoNascimentoAtorException | CadastroNomesIguaisAtorException e){
             System.out.println(e.getMessage());
         }
     }
@@ -43,11 +43,13 @@ public class AtorService {
 
         List<Ator> atores = fakeDatabase.recuperaAtores();
 
-        List<Ator> listaAtores = atores.stream()
-                .filter(e -> e.getStatusCarreira().equals(StatusCarreira.EM_ATIVIDADE))
-                .collect(Collectors.toList());
+        List<Ator> listaAtores = new ArrayList<>();
+
 
         try {
+            listaAtores = atores.stream()
+                    .filter(e -> e.getStatusCarreira().equals(StatusCarreira.EM_ATIVIDADE))
+                    .collect(Collectors.toList());
 
             listaAtoresEmAtividadeVazia(listaAtores);
         } catch (ListAtoresEmAtividadeVaziaException e) {
@@ -63,14 +65,16 @@ public class AtorService {
 
         List<Ator> atores = fakeDatabase.recuperaAtores();
 
-        List<Ator> listaAtores = atores.stream()
-                .filter(e -> e.getStatusCarreira().equals(StatusCarreira.EM_ATIVIDADE))
-                .filter(e -> e.getNome().contains(filtroNome))
-                .collect(Collectors.toList());
+        List<Ator> listaAtores = new ArrayList<>();
 
         try {
+            listaAtores = atores.stream()
+                    .filter(e -> e.getStatusCarreira().equals(StatusCarreira.EM_ATIVIDADE))
+                    .filter(e -> e.getNome().contains(filtroNome))
+                    .collect(Collectors.toList());
+
             listaAtoresEmAtividadeVazia(atores);
-            atorNãoEncontrado(listaAtores,filtroNome);
+            filtroAtorNãoEncontrado(listaAtores,filtroNome);
         }catch (ListAtoresEmAtividadeVaziaException | FiltroAtorNaoEncontradoException e){
             e.printStackTrace();
         }
@@ -89,6 +93,7 @@ public class AtorService {
                     .stream()
                     .filter(e -> e.getId().equals(id))
                     .collect(Collectors.toList());
+
            idNaoInformado(id);
            idNaoEncontrado(dadosAtor,id);
         } catch (IdNãoInformadoException e) {
@@ -135,7 +140,7 @@ public class AtorService {
         }
     }
 
-    private void atorNãoEncontrado(List<Ator> list, String filtro) throws FiltroAtorNaoEncontradoException {
+    private void filtroAtorNãoEncontrado(List<Ator> list, String filtro) throws FiltroAtorNaoEncontradoException {
 
         if(list.isEmpty()){
             throw new FiltroAtorNaoEncontradoException(filtro);
@@ -161,37 +166,37 @@ public class AtorService {
         }
     }
 
-    private void nomeSobrenome(String nome) throws NomeSobrenomeException {
+    private void nomeSobrenome(String nome) throws NomeSobrenomeAtorException {
 
         if(!nome.matches("^[a-zA-Z\\u00C0-\\u017F´]+\\s+[a-zA-Z\\u00C0-\\u017F´]{0,}$")){
-            throw new NomeSobrenomeException();
+            throw new NomeSobrenomeAtorException();
         }
     }
 
-    private void validarDatadeNascimento(LocalDate dataNascimento) throws DataDeNascimentoException {
+    private void validarDatadeNascimento(LocalDate dataNascimento) throws DataDeNascimentoAtorException {
 
         LocalDate dataHoje = LocalDate.now();
 
         if(dataNascimento.getYear() > dataHoje.getYear() &&
                 dataNascimento.getMonthValue() > dataHoje.getMonthValue() &&
                 dataNascimento.getDayOfMonth() > dataHoje.getDayOfMonth()){
-            throw new DataDeNascimentoException();
+            throw new DataDeNascimentoAtorException();
         }
     }
 
-    private void validarAnoNascimento(LocalDate dataNascimento, Integer anoInicioAtividade) throws AnoNascimentoException{
+    private void validarAnoNascimento(LocalDate dataNascimento, Integer anoInicioAtividade) throws AnoNascimentoAtorException {
         if(dataNascimento.getYear() > anoInicioAtividade){
-            throw new AnoNascimentoException();
+            throw new AnoNascimentoAtorException();
         }
     }
 
-    private void invalidarNomesIguais(String nome) throws CadastroNomesIguaisException {
+    private void invalidarNomesIguais(String nome) throws CadastroNomesIguaisAtorException {
 
         List<Ator> atores = fakeDatabase.recuperaAtores();
 
         for(Ator f : atores){
             if(f.getNome().equals(nome)){
-                throw new CadastroNomesIguaisException(nome);
+                throw new CadastroNomesIguaisAtorException(nome);
             }
         }
     }
