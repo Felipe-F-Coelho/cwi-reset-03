@@ -1,4 +1,6 @@
-package br.com.cwi.reset.felipecoelho;
+package br.com.cwi.reset.felipecoelho.domain;
+
+import br.com.cwi.reset.felipecoelho.enumapplication.TipoAtuacao;
 
 public class PersonagemAtor {
     private Integer id;

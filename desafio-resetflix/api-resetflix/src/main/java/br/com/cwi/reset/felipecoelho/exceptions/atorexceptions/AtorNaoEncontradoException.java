@@ -1,4 +1,4 @@
-package br.com.cwi.reset.felipecoelho.atorexceptions;
+package br.com.cwi.reset.felipecoelho.exceptions.atorexceptions;
 
 public class AtorNaoEncontradoException extends Exception{
     public AtorNaoEncontradoException(Integer id) {

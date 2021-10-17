@@ -1,4 +1,4 @@
-package br.com.cwi.reset.felipecoelho;
+package br.com.cwi.reset.felipecoelho.exceptions;
 
 public class IdNãoInformadoException extends Exception{
     public IdNãoInformadoException() {

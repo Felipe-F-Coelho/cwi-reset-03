@@ -1,5 +1,7 @@
 package br.com.cwi.reset.felipecoelho;
 
+import br.com.cwi.reset.felipecoelho.enumapplication.StatusCarreira;
+
 import java.time.LocalDate;
 
 

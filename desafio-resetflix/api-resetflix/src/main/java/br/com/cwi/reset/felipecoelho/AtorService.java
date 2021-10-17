@@ -1,6 +1,10 @@
 package br.com.cwi.reset.felipecoelho;
 
-import br.com.cwi.reset.felipecoelho.atorexceptions.*;
+import br.com.cwi.reset.felipecoelho.domain.Ator;
+import br.com.cwi.reset.felipecoelho.enumapplication.StatusCarreira;
+import br.com.cwi.reset.felipecoelho.exceptions.CampoObrigatorioException;
+import br.com.cwi.reset.felipecoelho.exceptions.IdNãoInformadoException;
+import br.com.cwi.reset.felipecoelho.exceptions.atorexceptions.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
