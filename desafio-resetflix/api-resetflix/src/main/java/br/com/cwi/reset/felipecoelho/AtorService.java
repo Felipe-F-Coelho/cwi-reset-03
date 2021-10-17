@@ -1,6 +1,6 @@
 package br.com.cwi.reset.felipecoelho;
 
-import br.com.cwi.reset.felipecoelho.AtorExceptions.*;
+import br.com.cwi.reset.felipecoelho.atorexceptions.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -137,7 +137,7 @@ public class AtorService {
 
     private void idNaoInformado(Integer id) throws IdNãoInformadoException {
 
-        if(id.describeConstable().isEmpty()){
+        if(id == null){
             throw new IdNãoInformadoException();
         }
     }

@@ -1,4 +1,4 @@
-package br.com.cwi.reset.felipecoelho.DiretorExceptions;
+package br.com.cwi.reset.felipecoelho.diretorexceptions;
 
 public class AnoNascimentoDiretorException extends Exception{
     public AnoNascimentoDiretorException() {

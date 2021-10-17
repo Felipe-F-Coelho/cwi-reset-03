@@ -1,4 +1,4 @@
-package br.com.cwi.reset.felipecoelho.AtorExceptions;
+package br.com.cwi.reset.felipecoelho.atorexceptions;
 
 public class NomeSobrenomeAtorException extends Exception{
     public NomeSobrenomeAtorException() {

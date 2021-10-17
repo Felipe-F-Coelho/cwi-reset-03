@@ -1,4 +1,4 @@
-package br.com.cwi.reset.felipecoelho.AtorExceptions;
+package br.com.cwi.reset.felipecoelho.atorexceptions;
 
 public class CadastroNomesIguaisAtorException extends Exception {
     public CadastroNomesIguaisAtorException(String nome) {

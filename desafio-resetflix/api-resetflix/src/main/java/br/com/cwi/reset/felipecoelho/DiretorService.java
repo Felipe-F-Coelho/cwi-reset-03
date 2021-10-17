@@ -1,6 +1,6 @@
 package br.com.cwi.reset.felipecoelho;
 
-import br.com.cwi.reset.felipecoelho.DiretorExceptions.*;
+import br.com.cwi.reset.felipecoelho.diretorexceptions.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -100,7 +100,7 @@ public class DiretorService {
 
     private void idNaoInformado(Integer id) throws IdNãoInformadoException {
 
-        if(id.describeConstable().isEmpty()){
+        if(id == null){
             throw new IdNãoInformadoException();
         }
     }
@@ -158,7 +158,7 @@ public class DiretorService {
             throw new CampoObrigatorioException("do nome");
         }else if(dataNascimento == null){
             throw new CampoObrigatorioException("da data de nascimento");
-        }else if(anoInicioAtividade.describeConstable().isEmpty()){
+        }else if(anoInicioAtividade == null){
             throw new CampoObrigatorioException("do ano inicio da atividade");
         }
     }
