@@ -27,7 +27,6 @@ public class FilmeController {
     @PostMapping
     public ResponseEntity<Filme> postFilme(@RequestBody Filme filme){
 
-
         if(selecionarNomeFilme(filme.getNome()) == null){
             filmes.add(filme);
             return ResponseEntity.ok(filme);
@@ -40,6 +39,7 @@ public class FilmeController {
     public List<Filme> getAllFilme(){
         return filmes;
     }
+
 
     @GetMapping("/{nome}")
     public Filme getConsultarNomeFilme(@PathVariable String nome){

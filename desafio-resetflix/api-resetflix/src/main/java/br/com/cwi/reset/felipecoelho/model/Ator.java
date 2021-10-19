@@ -1,6 +1,4 @@
-package br.com.cwi.reset.felipecoelho.domain;
-
-import br.com.cwi.reset.felipecoelho.enumapplication.StatusCarreira;
+package br.com.cwi.reset.felipecoelho.model;
 
 import java.time.LocalDate;
 
@@ -15,5 +13,9 @@ public class Ator extends Funcionario {
 
     public StatusCarreira getStatusCarreira() {
         return statusCarreira;
+    }
+
+    public void setStatusCarreira(StatusCarreira statusCarreira) {
+        this.statusCarreira = statusCarreira;
     }
 }

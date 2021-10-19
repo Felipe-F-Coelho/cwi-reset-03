@@ -1,4 +1,4 @@
-package br.com.cwi.reset.felipecoelho.domain;
+package br.com.cwi.reset.felipecoelho.model;
 
 import java.time.LocalDate;
 

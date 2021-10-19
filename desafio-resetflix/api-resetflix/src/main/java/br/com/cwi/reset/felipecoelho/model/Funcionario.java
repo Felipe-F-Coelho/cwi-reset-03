@@ -1,4 +1,4 @@
-package br.com.cwi.reset.felipecoelho.domain;
+package br.com.cwi.reset.felipecoelho.model;
 
 import java.time.LocalDate;
 
@@ -31,4 +31,19 @@ public class Funcionario {
         return anoInicioAtividade;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDataDeNascimento(LocalDate dataDeNascimento) {
+        this.dataDeNascimento = dataDeNascimento;
+    }
+
+    public void setAnoInicioAtividade(Integer anoInicioAtividade) {
+        this.anoInicioAtividade = anoInicioAtividade;
+    }
 }

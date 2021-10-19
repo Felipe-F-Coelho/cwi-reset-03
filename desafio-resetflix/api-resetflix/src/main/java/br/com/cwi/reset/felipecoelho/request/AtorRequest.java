@@ -1,6 +1,8 @@
-package br.com.cwi.reset.felipecoelho;
+package br.com.cwi.reset.felipecoelho.request;
 
-import br.com.cwi.reset.felipecoelho.enumapplication.StatusCarreira;
+import br.com.cwi.reset.felipecoelho.model.StatusCarreira;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDate;
 

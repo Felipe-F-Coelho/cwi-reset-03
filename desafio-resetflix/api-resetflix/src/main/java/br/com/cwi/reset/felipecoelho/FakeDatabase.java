@@ -1,6 +1,6 @@
 package br.com.cwi.reset.felipecoelho;
 
-import br.com.cwi.reset.felipecoelho.domain.*;
+import br.com.cwi.reset.felipecoelho.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
