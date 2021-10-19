@@ -1,5 +1,6 @@
 package br.com.cwi.reset.felipecoelho.service;
 
+import br.com.cwi.reset.felipecoelho.model.StatusAtividade;
 import br.com.cwi.reset.felipecoelho.response.AtorEmAtividade;
 import br.com.cwi.reset.felipecoelho.FakeDatabase;
 import br.com.cwi.reset.felipecoelho.model.Ator;

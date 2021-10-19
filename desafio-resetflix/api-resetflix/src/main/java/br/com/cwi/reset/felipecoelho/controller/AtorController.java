@@ -26,9 +26,7 @@ public class AtorController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void criarAtor(@RequestBody AtorRequest atorRequest){
-
         this.atorService.criarAtor(atorRequest);
-
     }
 
     @GetMapping
