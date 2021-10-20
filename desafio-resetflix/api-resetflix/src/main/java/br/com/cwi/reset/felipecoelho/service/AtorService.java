@@ -1,25 +1,21 @@
 package br.com.cwi.reset.felipecoelho.service;
 
-import br.com.cwi.reset.felipecoelho.model.StatusAtividade;
+import br.com.cwi.reset.felipecoelho.exceptions.*;
 import br.com.cwi.reset.felipecoelho.response.AtorEmAtividade;
 import br.com.cwi.reset.felipecoelho.FakeDatabase;
 import br.com.cwi.reset.felipecoelho.model.Ator;
 import br.com.cwi.reset.felipecoelho.model.StatusCarreira;
-import br.com.cwi.reset.felipecoelho.exceptions.CampoObrigatorioException;
-import br.com.cwi.reset.felipecoelho.exceptions.IdNãoInformadoException;
-import br.com.cwi.reset.felipecoelho.exceptions.atorexceptions.*;
 import br.com.cwi.reset.felipecoelho.request.AtorRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import br.com.cwi.reset.felipecoelho.validator.BasicInfoRequiredValidator;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class AtorService {
 
-    private FakeDatabase fakeDatabase;
+    final private FakeDatabase fakeDatabase;
     private Integer id;
 
     public Integer getId() {
@@ -33,198 +29,101 @@ public class AtorService {
 
     // Demais métodos da classe
 
-    // Metodos gerados como solicitado em contrato
+    public void criarAtor(AtorRequest atorRequest) throws Exception {
 
-    public void criarAtor(AtorRequest atorRequest) {
+        final List<Ator> atoresCadastrados = fakeDatabase.recuperaAtores();
 
-        try {
-            invalidarNomesIguais(atorRequest.getNome());
-            nomeSobrenome(atorRequest.getNome());
-            validarDatadeNascimento(atorRequest.getDataNascimento());
-            validarAnoNascimento(atorRequest.getDataNascimento(), atorRequest.getAnoInicioAtividade());
-            campoObrigatorio(atorRequest.getNome(), atorRequest.getDataNascimento(), atorRequest.getStatusCarreira(), atorRequest.getAnoInicioAtividade());
-            this.id = fakeDatabase.solicitarID();
-            Ator newAtor = new Ator(this.id, atorRequest.getNome(), atorRequest.getDataNascimento(), atorRequest.getStatusCarreira(), atorRequest.getAnoInicioAtividade());
-            fakeDatabase.persisteAtor(newAtor);
-        } catch (CampoObrigatorioException | NomeSobrenomeAtorException | DataDeNascimentoAtorException | AnoNascimentoAtorException | CadastroNomesIguaisAtorException e) {
-            e.printStackTrace();
+        new BasicInfoRequiredValidator().accept(atorRequest.getNome(), atorRequest.getDataNascimento(), atorRequest.getAnoInicioAtividade(),TipoDominioException.ATOR);
+
+        if(atorRequest.getStatusCarreira() == null){
+            throw new StatusCarreiraNaoInformadoException();
         }
+
+        for (Ator atorCadastrado : atoresCadastrados) {
+            if (atorCadastrado.getNome().equalsIgnoreCase(atorRequest.getNome())) {
+                throw new CadastroDuplicadoException(TipoDominioException.ATOR.getSingular(), atorRequest.getNome());
+            }
+        }
+
+        this.id = fakeDatabase.solicitarID();
+        Ator newAtor = new Ator(this.id, atorRequest.getNome(), atorRequest.getDataNascimento(), atorRequest.getStatusCarreira(), atorRequest.getAnoInicioAtividade());
+        fakeDatabase.persisteAtor(newAtor);
     }
 
-    public List<AtorEmAtividade> listarAtoresEmAtividade() {
 
-        List<Ator> atores = fakeDatabase.recuperaAtores();
+    public List<AtorEmAtividade> listarAtoresEmAtividade() throws Exception {
 
-        List<Ator> listaAtores = new ArrayList<>();
+        List<Ator> listaAtores = fakeDatabase.recuperaAtores()
+                .stream()
+                .filter(e -> e.getStatusCarreira().equals(StatusCarreira.EM_ATIVIDADE))
+                .collect(Collectors.toList());
+
+        if (listaAtores.isEmpty()) {
+            throw new ListaConsultaVaziaExceptions(TipoDominioException.ATOR.getSingular(), TipoDominioException.ATOR.getPlural());
+        }
 
         final List<AtorEmAtividade> retorno = new ArrayList<>();
-
-
-        try {
-            listaAtores = atores.stream()
-                    .filter(e -> e.getStatusCarreira().equals(StatusCarreira.EM_ATIVIDADE))
-                    .collect(Collectors.toList());
-
-            listaAtoresEmAtividadeVazia(listaAtores);
-        } catch (ListAtoresEmAtividadeVaziaException e) {
-            e.printStackTrace();
-        }
 
         for (Ator ator : listaAtores) {
             retorno.add(new AtorEmAtividade(ator.getId(), ator.getNome(), ator.getDataDeNascimento()));
         }
+        return retorno;
+    }
 
+
+    public List<AtorEmAtividade> listarAtoresEmAtividade(String filtroNome) throws Exception {
+
+        List<Ator> listaAtores = fakeDatabase.recuperaAtores()
+                .stream()
+                .filter(e -> e.getStatusCarreira().equals(StatusCarreira.EM_ATIVIDADE))
+                .collect(Collectors.toList());
+
+        if (listaAtores.isEmpty()) {
+            throw new ListaConsultaVaziaExceptions(TipoDominioException.ATOR.getSingular(), TipoDominioException.ATOR.getPlural());
+        }
+
+        final List<AtorEmAtividade> retorno = new ArrayList<>();
+
+        for (Ator ator : listaAtores) {
+            if(ator.getNome().toLowerCase(Locale.ROOT).contains(filtroNome.toLowerCase(Locale.ROOT)))
+            retorno.add(new AtorEmAtividade(ator.getId(), ator.getNome(), ator.getDataDeNascimento()));
+        }
+
+        if (retorno.isEmpty()) {
+            throw new FiltroNaoEncontradoException(TipoDominioException.ATOR.getSingular(), filtroNome);
+        }
 
         return retorno;
     }
 
 
-    public List<AtorEmAtividade> listarAtoresEmAtividade(String filtroNome) {
+    public Ator consultarAtor(Integer id) throws Exception {
+
+        if (id == null) {
+            throw new IdNaoInformadoException();
+        }
 
         List<Ator> atores = fakeDatabase.recuperaAtores();
 
-        List<Ator> listaAtores = new ArrayList<>();
+        List<Ator> dadosAtor = atores
+                .stream()
+                .filter(e -> e.getId().equals(id))
+                .collect(Collectors.toList());
 
-        final List<AtorEmAtividade> retorno = new ArrayList<>();
-
-        try {
-            listaAtores = atores.stream()
-                    .filter(e -> e.getStatusCarreira().equals(StatusCarreira.EM_ATIVIDADE))
-                    .filter(e -> e.getNome().contains(filtroNome))
-                    .collect(Collectors.toList());
-
-            listaAtoresEmAtividadeVazia(atores);
-            filtroAtorNãoEncontrado(listaAtores, filtroNome);
-        } catch (ListAtoresEmAtividadeVaziaException | FiltroAtorNaoEncontradoException e) {
-            e.printStackTrace();
+        if (dadosAtor.isEmpty()) {
+            throw new ConsultaInvalidaIdException(TipoDominioException.ATOR.getSingular(), id);
         }
-
-        for (Ator ator : listaAtores) {
-            retorno.add(new AtorEmAtividade(ator.getId(), ator.getNome(), ator.getDataDeNascimento()));
-        }
-
-        return retorno;
-    }
-
-    public Ator consultarAtor(Integer id) {
-
-        List<Ator> atores = fakeDatabase.recuperaAtores();
-
-        List<Ator> dadosAtor = new ArrayList<>();
-
-        try {
-            dadosAtor = atores
-                    .stream()
-                    .filter(e -> e.getId().equals(id))
-                    .collect(Collectors.toList());
-
-            idNaoInformado(id);
-            idNaoEncontrado(dadosAtor, id);
-        } catch (IdNãoInformadoException e) {
-            e.printStackTrace();
-        } catch (AtorNaoEncontradoException e) {
-            e.printStackTrace();
-        }
-
         return dadosAtor.get(0);
     }
 
-    public List<Ator> consultarAtores() {
-        List<Ator> atores = new ArrayList<>();
 
-        try {
-            atores = fakeDatabase.recuperaAtores();
-            nenhumAtorEncontrado(atores);
-        } catch (NenhumAtorEncontradoException e) {
-            e.printStackTrace();
+    public List<Ator> consultarAtores() throws Exception {
+        List<Ator> atores = fakeDatabase.recuperaAtores();
+
+        if (atores.isEmpty()) {
+            throw new ListaConsultaVaziaExceptions(TipoDominioException.ATOR.getSingular(), TipoDominioException.ATOR.getPlural());
         }
 
         return atores;
     }
-
-    // Metodos para gerar Excepetions
-
-    private void nenhumAtorEncontrado(List<Ator> atores) throws NenhumAtorEncontradoException {
-        if (atores.isEmpty()) {
-            throw new NenhumAtorEncontradoException();
-        }
-    }
-
-    private void idNaoEncontrado(List<Ator> dadosAtor, Integer id) throws AtorNaoEncontradoException {
-
-        if (dadosAtor.isEmpty()) {
-            throw new AtorNaoEncontradoException(id);
-        }
-    }
-
-    private void idNaoInformado(Integer id) throws IdNãoInformadoException {
-
-        if (id == null) {
-            throw new IdNãoInformadoException();
-        }
-    }
-
-    private void filtroAtorNãoEncontrado(List<Ator> list, String filtro) throws FiltroAtorNaoEncontradoException {
-
-        if (list.isEmpty()) {
-            throw new FiltroAtorNaoEncontradoException(filtro);
-        }
-    }
-
-    private void listaAtoresEmAtividadeVazia(List<Ator> list) throws ListAtoresEmAtividadeVaziaException {
-
-        if (list.isEmpty()) {
-            throw new ListAtoresEmAtividadeVaziaException();
-        }
-    }
-
-    private void campoObrigatorio(String nome, LocalDate dataNascimento, StatusCarreira statusCarreira, Integer anoInicioAtividade) throws CampoObrigatorioException {
-        if (nome == null) {
-            throw new CampoObrigatorioException("do nome");
-        } else if (dataNascimento == null) {
-            throw new CampoObrigatorioException("da data de nascimento");
-        } else if (statusCarreira == null) {
-            throw new CampoObrigatorioException("do status da carreira");
-        } else if (anoInicioAtividade == null) {
-            throw new CampoObrigatorioException("do ano inicio da atividade");
-        }
-    }
-
-    private void nomeSobrenome(String nome) throws NomeSobrenomeAtorException {
-
-        if (!nome.matches("^[a-zA-Z\\u00C0-\\u017F´]+\\s+[a-zA-Z\\u00C0-\\u017F´]{0,}$")) {
-            throw new NomeSobrenomeAtorException();
-        }
-    }
-
-    private void validarDatadeNascimento(LocalDate dataNascimento) throws DataDeNascimentoAtorException {
-
-        LocalDate dataHoje = LocalDate.now();
-
-        if (dataNascimento.getYear() > dataHoje.getYear() &&
-                dataNascimento.getMonthValue() > dataHoje.getMonthValue() &&
-                dataNascimento.getDayOfMonth() > dataHoje.getDayOfMonth()) {
-            throw new DataDeNascimentoAtorException();
-        }
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    private void validarAnoNascimento(LocalDate dataNascimento, Integer anoInicioAtividade) throws AnoNascimentoAtorException {
-        if (dataNascimento.getYear() > anoInicioAtividade) {
-            throw new AnoNascimentoAtorException();
-        }
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    private void invalidarNomesIguais(String nome) throws CadastroNomesIguaisAtorException {
-
-        List<Ator> atores = fakeDatabase.recuperaAtores();
-
-        for (Ator f : atores) {
-            if (f.getNome().equals(nome)) {
-                throw new CadastroNomesIguaisAtorException(nome);
-            }
-        }
-    }
-
 }

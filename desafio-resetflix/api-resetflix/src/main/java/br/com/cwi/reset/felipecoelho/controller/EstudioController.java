@@ -27,21 +27,21 @@ public class EstudioController {
         estudioService.criarEstudio(estudioRequest);
     }
 
-    @GetMapping("/{filtro}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Estudio> consultarEstudios(@RequestParam(value = "filtro",required = false)@PathVariable String filtro) throws Exception {
-        return estudioService.consultarEstudios(filtro);
-    }
-
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Estudio> consultarEstudios() throws Exception {
-        return estudioService.consultarEstudios();
+    public List<Estudio> consultarEstudios(@RequestParam(value = "filtro",required = false)@PathVariable String filtro) throws Exception {
+
+        if(filtro != null){
+            return estudioService.consultarEstudios(filtro);
+        }else{
+            return estudioService.consultarEstudios();
+        }
     }
 
-    @GetMapping(value = {"/{id}"})
+
+    @GetMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Estudio consultarEstudio(@RequestParam(value = "id") @PathVariable Integer id) throws Exception {
+    public Estudio consultarEstudio(@PathVariable Integer id) throws Exception {
 
         return estudioService.consultarEstudio(id);
     }

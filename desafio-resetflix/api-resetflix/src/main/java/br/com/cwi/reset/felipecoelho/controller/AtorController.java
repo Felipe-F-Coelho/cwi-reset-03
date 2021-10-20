@@ -25,27 +25,25 @@ public class AtorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void criarAtor(@RequestBody AtorRequest atorRequest){
+    public void criarAtor(@RequestBody AtorRequest atorRequest) throws Exception {
         this.atorService.criarAtor(atorRequest);
     }
 
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<AtorEmAtividade> listarAtoresEmAtividade(){
+    public List<AtorEmAtividade> listarAtoresEmAtividade(@RequestParam(value = "filtro",required = false) @PathVariable String filtro) throws Exception {
 
-        return atorService.listarAtoresEmAtividade();
-    }
-
-    @GetMapping(value = "/{ator}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<AtorEmAtividade> listarAtoresEmAtividade(@RequestParam(value = "ator",required = false) @PathVariable String ator){
-
-        return atorService.listarAtoresEmAtividade(ator);
+        if (filtro != null) {
+            return atorService.listarAtoresEmAtividade(filtro);
+        }else{
+            return atorService.listarAtoresEmAtividade();
+        }
     }
 
     @GetMapping(value = {"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Ator consultarAtor(@RequestParam(value = "id") @PathVariable Integer id){
+    public Ator consultarAtor(@PathVariable Integer id) throws Exception {
 
         return atorService.consultarAtor(id);
     }
@@ -53,7 +51,7 @@ public class AtorController {
     @RequestMapping(value = "/{consultarAtores}")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Ator> consultarAtores(){
+    public List<Ator> consultarAtores() throws Exception {
         return atorService.consultarAtores();
     }
 

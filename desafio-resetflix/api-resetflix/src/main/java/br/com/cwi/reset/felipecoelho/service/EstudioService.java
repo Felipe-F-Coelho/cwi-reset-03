@@ -7,11 +7,12 @@ import br.com.cwi.reset.felipecoelho.request.EstudioRequest;
 import br.com.cwi.reset.felipecoelho.validator.BasicInfoRequiredValidatorEstudio;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class EstudioService {
 
-    private FakeDatabase fakeDatabase;
+    final private FakeDatabase fakeDatabase;
     private Integer id;
 
     public EstudioService(FakeDatabase fakeDatabase) {
@@ -51,7 +52,7 @@ public class EstudioService {
         }
 
         List<Estudio> retorno = estudios.stream()
-                .filter(e -> e.getNome().equals(filtroNome))
+                .filter(e -> e.getNome().toLowerCase(Locale.ROOT).contains(filtroNome.toLowerCase(Locale.ROOT)))
                 .collect(Collectors.toList());
 
         if(retorno.isEmpty()){
@@ -67,6 +68,7 @@ public class EstudioService {
         if(estudios.isEmpty()){
             throw new ListaConsultaVaziaExceptions(TipoDominioException.ESTUDIO.getSingular(),TipoDominioException.ESTUDIO.getPlural());
         }
+
 
         return estudios;
     }

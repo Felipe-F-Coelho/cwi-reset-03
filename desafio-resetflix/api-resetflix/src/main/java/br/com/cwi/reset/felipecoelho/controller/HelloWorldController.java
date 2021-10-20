@@ -1,6 +1,5 @@
 package br.com.cwi.reset.felipecoelho.controller;
 
-import br.com.cwi.reset.felipecoelho.exceptions.CampoObrigatorioException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +10,6 @@ public class HelloWorldController {
     
     @GetMapping
     public String helloWorld() throws Exception {
-        //return "Minha API resetflix está UP!!!";
-        throw new CampoObrigatorioException("teste");
+        return "Minha API resetflix está UP!!!";
     }
 }

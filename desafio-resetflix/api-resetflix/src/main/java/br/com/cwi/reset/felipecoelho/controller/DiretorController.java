@@ -24,26 +24,26 @@ public class DiretorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void cadastrarDiretor(@RequestBody DiretorRequest diretorRequest){
+    public void cadastrarDiretor(@RequestBody DiretorRequest diretorRequest) throws Exception {
 
         this.diretorService.criarDiretor(diretorRequest);
     }
 
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Diretor> listarDiretores(){
-        return diretorService.listarDiretores();
+        public List<Diretor> listarDiretores(@RequestParam(value = "filtro",required = false)@PathVariable String filtro) throws Exception {
+
+        if(filtro != null){
+            return diretorService.listarDiretores(filtro);
+        }else {
+            return diretorService.listarDiretores();
+        }
     }
 
-    @GetMapping(value = "/{filtroNome}")
+    @GetMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-        public List<Diretor> listarDiretores(String filtroNome){
-        return diretorService.listarDiretores(filtroNome);
-    }
-
-    @GetMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Diretor consultarDiretor(@RequestParam(value = "id") @PathVariable Integer id){
+    public Diretor consultarDiretor(@PathVariable Integer id) throws Exception {
         return diretorService.consultarDiretor(id);
     }
 }
