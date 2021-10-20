@@ -35,9 +35,9 @@ public class EstudioService {
             }
         }
 
-        new BasicInfoRequiredValidatorEstudio().accept(estudioRequest.getNome(),estudioRequest.getDescricao(),estudioRequest.getDataCriacao(),estudioRequest.getStatusAtividade(), TipoDominioException.ESTUDIO);
+        new BasicInfoRequiredValidatorEstudio().accept(estudioRequest.getNome(),estudioRequest.getDescricao(),estudioRequest.getDataCriacao(),estudioRequest.getStatusAtividade());
 
-        id = this.fakeDatabase.solicitarID();
+        this.id = this.fakeDatabase.solicitarID();
         final Estudio newEstudio = new Estudio(id,estudioRequest.getNome(),estudioRequest.getDescricao(),estudioRequest.getDataCriacao(),estudioRequest.getStatusAtividade());
         fakeDatabase.persisteEstudio(newEstudio);
 

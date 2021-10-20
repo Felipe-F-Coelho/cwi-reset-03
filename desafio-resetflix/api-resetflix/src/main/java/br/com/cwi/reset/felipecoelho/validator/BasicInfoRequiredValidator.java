@@ -1,7 +1,6 @@
 package br.com.cwi.reset.felipecoelho.validator;
 
 import br.com.cwi.reset.felipecoelho.exceptions.*;
-import br.com.cwi.reset.felipecoelho.model.StatusCarreira;
 
 import java.time.LocalDate;
 

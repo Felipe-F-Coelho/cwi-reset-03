@@ -1,18 +1,16 @@
 package br.com.cwi.reset.felipecoelho.request;
 
 import br.com.cwi.reset.felipecoelho.model.StatusCarreira;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDate;
 
 
 public class AtorRequest {
 
-    private String nome;
-    private LocalDate dataNascimento;
-    private StatusCarreira statusCarreira;
-    private Integer anoInicioAtividade;
+    final private String nome;
+    final private LocalDate dataNascimento;
+    final private StatusCarreira statusCarreira;
+    final private Integer anoInicioAtividade;
 
     public AtorRequest(String nome, LocalDate dataNascimento, StatusCarreira statusCarreira, Integer anoInicioAtividade) {
 

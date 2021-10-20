@@ -7,7 +7,7 @@ import java.util.List;
 
 public class FakeDatabase {
 
-    private static FakeDatabase fakeDatabase = new FakeDatabase();
+    final private static FakeDatabase fakeDatabase = new FakeDatabase();
 
     public static FakeDatabase getInstance() {
         return fakeDatabase;
@@ -24,19 +24,11 @@ public class FakeDatabase {
         return idSequencia;
     }
 
-    public static Integer getIdSequencia() {
-        return idSequencia;
-    }
-
-    public static void setIdSequencia(Integer idSequencia) {
-        FakeDatabase.idSequencia = idSequencia;
-    }
-
-    private List<Ator> atores = new ArrayList<>();
-    private List<Diretor> diretores = new ArrayList<>();
-    private List<Estudio> estudios = new ArrayList<>();
-    private List<Filme> filmes = new ArrayList<>();
-    private List<PersonagemAtor> personagens = new ArrayList<>();
+    final private List<Ator> atores = new ArrayList<>();
+    final private List<Diretor> diretores = new ArrayList<>();
+    final private List<Estudio> estudios = new ArrayList<>();
+    final private List<Filme> filmes = new ArrayList<>();
+    final private List<Personagem> personagens = new ArrayList<>();
 
     public void persisteAtor(Ator ator) {
         atores.add(ator);
@@ -70,11 +62,11 @@ public class FakeDatabase {
         return filmes;
     }
 
-    public void persistePersonagem(PersonagemAtor personagemAtor) {
+    public void persistePersonagem(Personagem personagemAtor) {
         personagens.add(personagemAtor);
     }
 
-    public List<PersonagemAtor> recuperaPersonagens() {
+    public List<Personagem> recuperaPersonagens() {
         return personagens;
     }
 }

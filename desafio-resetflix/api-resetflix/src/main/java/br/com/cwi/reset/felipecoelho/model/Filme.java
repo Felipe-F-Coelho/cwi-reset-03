@@ -1,5 +1,7 @@
 package br.com.cwi.reset.felipecoelho.model;
 
+import br.com.cwi.reset.felipecoelho.request.PersonagemRequest;
+
 import java.util.List;
 
 public class Filme {
@@ -7,11 +9,23 @@ public class Filme {
     private String nome;
     private Integer anoLancamento;
     private String capaFilme;
-    private Genero generos;
-    private Diretor diretor;
-    private Estudio estudio;
-    private List<PersonagemAtor> personagens;
+    private List<Genero> generos;
+    private Integer idDiretor;
+    private Integer idEstudio;
     private String resumo;
+    private List<PersonagemRequest> personagens;
+
+    public Filme(Integer id, String nome, Integer anoLancamento, String capaFilme, List<Genero> generos, Integer idDiretor, Integer idEstudio, String resumo, List<PersonagemRequest> personagens) {
+        this.id = id;
+        this.nome = nome;
+        this.anoLancamento = anoLancamento;
+        this.capaFilme = capaFilme;
+        this.generos = generos;
+        this.idDiretor = idDiretor;
+        this.idEstudio = idEstudio;
+        this.resumo = resumo;
+        this.personagens = personagens;
+    }
 
     public Integer getId() {
         return id;
@@ -45,36 +59,28 @@ public class Filme {
         this.capaFilme = capaFilme;
     }
 
-    public Genero getGeneros() {
+    public List<Genero> getGeneros() {
         return generos;
     }
 
-    public void setGeneros(Genero generos) {
+    public void setGeneros(List<Genero> generos) {
         this.generos = generos;
     }
 
-    public Diretor getDiretor() {
-        return diretor;
+    public Integer getIdDiretor() {
+        return idDiretor;
     }
 
-    public void setDiretor(Diretor diretor) {
-        this.diretor = diretor;
+    public void setIdDiretor(Integer idDiretor) {
+        this.idDiretor = idDiretor;
     }
 
-    public Estudio getEstudio() {
-        return estudio;
+    public Integer getIdEstudio() {
+        return idEstudio;
     }
 
-    public void setEstudio(Estudio estudio) {
-        this.estudio = estudio;
-    }
-
-    public List<PersonagemAtor> getPersonagens() {
-        return personagens;
-    }
-
-    public void setPersonagens(List<PersonagemAtor> personagens) {
-        this.personagens = personagens;
+    public void setIdEstudio(Integer idEstudio) {
+        this.idEstudio = idEstudio;
     }
 
     public String getResumo() {
@@ -83,5 +89,13 @@ public class Filme {
 
     public void setResumo(String resumo) {
         this.resumo = resumo;
+    }
+
+    public List<PersonagemRequest> getPersonagens() {
+        return personagens;
+    }
+
+    public void setPersonagens(List<PersonagemRequest> personagens) {
+        this.personagens = personagens;
     }
 }

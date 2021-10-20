@@ -6,10 +6,10 @@ import java.time.LocalDate;
 
 public class EstudioRequest {
 
-    private String nome;
-    private String descricao;
-    private LocalDate dataCriacao;
-    private StatusAtividade statusAtividade;;
+    final private String nome;
+    final private String descricao;
+    final private LocalDate dataCriacao;
+    final private StatusAtividade statusAtividade;
 
     public EstudioRequest(String nome, String descricao, LocalDate dataCriacao, StatusAtividade statusAtividade) {
         this.nome = nome;

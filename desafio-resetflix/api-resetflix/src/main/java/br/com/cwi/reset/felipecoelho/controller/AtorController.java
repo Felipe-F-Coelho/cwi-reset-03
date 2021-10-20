@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/atores")
 public class AtorController {
 
-    private AtorService atorService;
+    final private AtorService atorService;
 
     public AtorController() {
         this.atorService = new AtorService(FakeDatabase.getInstance());

@@ -3,17 +3,27 @@ package br.com.cwi.reset.felipecoelho.model;
 import br.com.cwi.reset.felipecoelho.model.Ator;
 import br.com.cwi.reset.felipecoelho.model.TipoAtuacao;
 
-public class PersonagemAtor {
+public class Personagem {
+    private Integer id;
     private Integer idAtor;
     private String nomePersonagem;
     private String descricaoPersonagem;
     private TipoAtuacao tipoAtuacao;
 
-    public PersonagemAtor(Integer idAtor, String nomePersonagem, String descricaoPersonagem, TipoAtuacao tipoAtuacao) {
+    public Personagem(Integer id, Integer idAtor, String nomePersonagem, String descricaoPersonagem, TipoAtuacao tipoAtuacao) {
+        this.id = id;
         this.idAtor = idAtor;
         this.nomePersonagem = nomePersonagem;
         this.descricaoPersonagem = descricaoPersonagem;
         this.tipoAtuacao = tipoAtuacao;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getIdAtor() {

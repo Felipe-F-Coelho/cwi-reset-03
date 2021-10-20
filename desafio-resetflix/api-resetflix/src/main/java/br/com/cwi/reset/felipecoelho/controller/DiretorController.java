@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/diretores")
 public class DiretorController {
 
-    private DiretorService diretorService;
+    final private DiretorService diretorService;
 
     public DiretorController() {
         this.diretorService = new DiretorService(FakeDatabase.getInstance());

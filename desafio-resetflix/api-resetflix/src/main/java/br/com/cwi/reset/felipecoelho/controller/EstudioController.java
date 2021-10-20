@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/estudios")
 public class EstudioController {
 
-    private EstudioService estudioService;
+    final private EstudioService estudioService;
 
     public EstudioController() {
         this.estudioService = new EstudioService(FakeDatabase.getInstance());
