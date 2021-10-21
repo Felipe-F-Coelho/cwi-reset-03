@@ -18,7 +18,7 @@ public class BasicInfoRequiredValidatorFilme {
         if(capaFilme == null){
             throw new CapaFilmeNaoInformadoException();
         }
-        if(generos == null){
+        if(generos.isEmpty()){
             throw new GeneroNaoInformadoException();
         }
         if(idDiretor == null){

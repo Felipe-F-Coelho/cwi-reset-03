@@ -81,15 +81,15 @@ public class EstudioService {
 
         List<Estudio> estudios = fakeDatabase.recuperaEstudios();
 
-        List<Estudio> dadosAtor = estudios
+        List<Estudio> dadosEstudio = estudios
                 .stream()
                 .filter(e -> e.getId().equals(id))
                 .collect(Collectors.toList());
 
-        if(dadosAtor.isEmpty()){
+        if(dadosEstudio.isEmpty()){
             throw new ConsultaInvalidaIdException(TipoDominioException.ESTUDIO.getSingular(),id);
         }
 
-        return dadosAtor.get(0);
+        return dadosEstudio.get(0);
     }
 }
