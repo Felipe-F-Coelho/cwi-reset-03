@@ -24,15 +24,15 @@ public class PetController {
     }
 
     @GetMapping("/{nome}")
-    public ResponseEntity<Pet> getById(@PathVariable String nome) throws PetNaoExistenteException {
-        Pet pet = petService.buscarPetPeloNome(nome);
+    public ResponseEntity<List<Pet>> getById(@PathVariable String nome) throws PetNaoExistenteException {
+        List<Pet> pet = petService.buscarPetPeloNome(nome);
 
         return ResponseEntity.ok(pet);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Pet cadastrarPet(@RequestBody Pet pet) throws PetJaExistenteException {
+    public Pet cadastrarPet(@RequestBody Pet pet) {
         return petService.adicionarPet(pet);
     }
 

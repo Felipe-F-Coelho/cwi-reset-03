@@ -30,25 +30,19 @@ public class AtorController {
     }
 
 
-    @GetMapping
+    @GetMapping(path = "/filtro_atores")
     @ResponseStatus(HttpStatus.OK)
-    public List<AtorEmAtividade> listarAtoresEmAtividade(@RequestParam(value = "filtro",required = false) @PathVariable String filtro) throws Exception {
-
-        if (filtro != null) {
-            return atorService.listarAtoresEmAtividade(filtro);
-        }else{
-            return atorService.listarAtoresEmAtividade();
-        }
+    public List<AtorEmAtividade> listarAtoresEmAtividade(@RequestParam(value = "filtro",required = false) String filtro) throws Exception {
+        return atorService.listarAtoresEmAtividade(filtro);
     }
 
-    @GetMapping(value = {"/{id}"})
+    @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Ator consultarAtor(@PathVariable Integer id) throws Exception {
 
         return atorService.consultarAtor(id);
     }
 
-    @RequestMapping(value = "/{consultarAtores}")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Ator> consultarAtores() throws Exception {

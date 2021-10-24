@@ -1,18 +1,16 @@
 package br.com.cwi.reset.projeto1.repository;
 
 import br.com.cwi.reset.projeto1.domain.Pet;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface PetRepository {
+@Repository
+public interface PetRepository extends CrudRepository<Pet, Integer> {
 
-    List<Pet> retornarPets();
+    List<Pet> findAll();
 
-    Pet buscarPet(String nome);
+    List<Pet> findByNome(String nome);
 
-    Pet adicionarPet(Pet pet);
-
-    Pet atualizarPet(Pet pet);
-
-    Pet deletarPet(String nome);
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PetService {
@@ -18,51 +19,41 @@ public class PetService {
 
 
     public List<Pet> consultarPets() {
-        return repository.retornarPets();
+        return (List<Pet>) repository.findAll();
     }
 
-    public Pet buscarPetPeloNome(String nome) throws PetNaoExistenteException {
-        Pet pet = repository.buscarPet(nome);
+    public List<Pet> buscarPetPeloNome(String nome) throws PetNaoExistenteException {
+        List<Pet> pet = repository.findByNome(nome);
 
-        if (pet == null) {
+        if (pet.isEmpty()) {
             throw new PetNaoExistenteException("Pet com o nome " + nome + " não existe");
         }
-
         return pet;
     }
 
 
-    public Pet adicionarPet(Pet pet) throws PetJaExistenteException {
-
-        Pet petJaCadastrado = repository.buscarPet(pet.getNome());
-
-        if (petJaCadastrado != null) {
-            throw new PetJaExistenteException("Pet com o nome " + pet.getNome() + " já existe");
-        }
-
-        return repository.adicionarPet(pet);
+    public Pet adicionarPet(Pet pet) {
+        return repository.save(pet);
     }
 
 
     public Pet atualizarPet(Pet pet) throws Exception {
 
-        Pet petJaCadastrado = repository.buscarPet(pet.getNome());
-
-        if (petJaCadastrado == null) {
+        if(pet.getId() == null || !repository.findById(pet.getId()).isPresent()) {
             throw new PetNaoExistenteException("Pet com o nome " + pet.getNome() + " não existe");
         }
 
-        return repository.atualizarPet(pet);
+        return repository.save(pet);
     }
 
     public void deletarPet(String nome) throws Exception {
 
-        Pet pet = repository.buscarPet(nome);
+        List<Pet> pet = repository.findByNome(nome);
 
-        if (pet == null) {
+        if (pet.isEmpty()) {
             throw new PetNaoExistenteException("Pet com o nome " + nome + " não existe");
         }
 
-        repository.deletarPet(pet.getNome());
+        repository.deleteAll(pet);
     }
 }
