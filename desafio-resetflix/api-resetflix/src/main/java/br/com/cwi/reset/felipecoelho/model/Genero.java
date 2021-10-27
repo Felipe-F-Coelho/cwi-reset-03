@@ -1,7 +1,6 @@
 package br.com.cwi.reset.felipecoelho.model;
 
 public enum Genero {
-
     ACAO,
     AVENTURA,
     COMEDIA,
@@ -15,5 +14,4 @@ public enum Genero {
     POLICIAL,
     ROMANCE,
     TERROR;
-
-    }
+}

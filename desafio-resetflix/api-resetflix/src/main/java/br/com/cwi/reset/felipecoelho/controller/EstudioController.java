@@ -1,23 +1,22 @@
 package br.com.cwi.reset.felipecoelho.controller;
 
-import br.com.cwi.reset.felipecoelho.FakeDatabase;
 import br.com.cwi.reset.felipecoelho.model.Estudio;
 import br.com.cwi.reset.felipecoelho.request.EstudioRequest;
 import br.com.cwi.reset.felipecoelho.service.EstudioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/estudios")
 public class EstudioController {
 
-    final private EstudioService estudioService;
-
-    public EstudioController() {
-        this.estudioService = new EstudioService(FakeDatabase.getInstance());
-    }
+    @Autowired
+    private EstudioService estudioService;
 
     //Metodos da classe
 
@@ -29,7 +28,7 @@ public class EstudioController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Estudio> consultarEstudios(@RequestParam(value = "filtro",required = false)@PathVariable String filtro) throws Exception {
+    public List<Estudio> consultarEstudios(@RequestParam(value = "filtro",required = false) String filtro) throws Exception {
 
         if(filtro != null){
             return estudioService.consultarEstudios(filtro);
@@ -38,10 +37,9 @@ public class EstudioController {
         }
     }
 
-
     @GetMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Estudio consultarEstudio(@PathVariable Integer id) throws Exception {
+    public Optional<Estudio> consultarEstudio(@NotNull(message = "Campo obrigatório não informado. Favor informar campo ID") @PathVariable Integer id) throws Exception {
 
         return estudioService.consultarEstudio(id);
     }

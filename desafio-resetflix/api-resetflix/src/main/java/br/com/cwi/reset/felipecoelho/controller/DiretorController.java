@@ -1,30 +1,29 @@
 package br.com.cwi.reset.felipecoelho.controller;
 
-import br.com.cwi.reset.felipecoelho.FakeDatabase;
 import br.com.cwi.reset.felipecoelho.model.Diretor;
 import br.com.cwi.reset.felipecoelho.request.DiretorRequest;
-import br.com.cwi.reset.felipecoelho.service.AtorService;
 import br.com.cwi.reset.felipecoelho.service.DiretorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/diretores")
 public class DiretorController {
 
-    final private DiretorService diretorService;
-
-    public DiretorController() {
-        this.diretorService = new DiretorService(FakeDatabase.getInstance());
-    }
+    @Autowired
+    private DiretorService diretorService;
 
     //demais metodos
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void cadastrarDiretor(@RequestBody DiretorRequest diretorRequest) throws Exception {
+    public void cadastrarDiretor(@RequestBody @Valid DiretorRequest diretorRequest) throws Exception {
 
         this.diretorService.criarDiretor(diretorRequest);
     }
@@ -32,7 +31,7 @@ public class DiretorController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-        public List<Diretor> listarDiretores(@RequestParam(value = "filtro",required = false)@PathVariable String filtro) throws Exception {
+        public List<Diretor> listarDiretores(@RequestParam(value = "filtro",required = false) String filtro) throws Exception {
 
         if(filtro != null){
             return diretorService.listarDiretores(filtro);
@@ -43,7 +42,7 @@ public class DiretorController {
 
     @GetMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public Diretor consultarDiretor(@PathVariable Integer id) throws Exception {
+    public Optional<Diretor> consultarDiretor(@NotNull(message = "Campo obrigatório não informado. Favor informar campo ID") @PathVariable Integer id) throws Exception {
         return diretorService.consultarDiretor(id);
     }
 }
