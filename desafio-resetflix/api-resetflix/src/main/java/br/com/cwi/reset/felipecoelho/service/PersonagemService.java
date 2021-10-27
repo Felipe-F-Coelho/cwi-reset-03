@@ -50,7 +50,7 @@ public class PersonagemService {
         return repository.findByNomePersonagemContainsIgnoreCase(nome);
     }
 
-    public List<Ator> consultarAtor(String nome){
+    public List<PersonagemAtor> consultarAtorDoPersonagem(String nome){
         return repository.findByAtorNomeContainsIgnoreCase(nome);
     }
 }

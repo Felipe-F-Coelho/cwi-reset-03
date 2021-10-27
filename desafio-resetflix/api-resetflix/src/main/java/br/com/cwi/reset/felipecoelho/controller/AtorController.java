@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Path;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -26,9 +27,20 @@ public class AtorController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void criarAtor(@RequestBody @Valid AtorRequest atorRequest) throws Exception {
-        this.atorService.criarAtor(atorRequest);
+        atorService.criarAtor(atorRequest);
     }
 
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void atualizarAtor(@PathVariable @NotNull(message = "Campo obrigatório não informado. Favor informar campo ID") Integer id,@RequestBody @Valid AtorRequest atorRequest) throws Exception {
+        atorService.atualizarAtor(id,atorRequest);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deletarAtor(@PathVariable @NotNull(message = "Campo obrigatório não informado. Favor informar campo ID") Integer id) throws Exception {
+        atorService.removerAtor(id);
+    }
 
     @GetMapping(path = "/filtro_atores")
     @ResponseStatus(HttpStatus.OK)
@@ -38,7 +50,7 @@ public class AtorController {
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Ator> consultarAtor(@NotNull(message = "Campo obrigatório não informado. Favor informar campo ID") @PathVariable Integer id) throws Exception {
+    public Optional<Ator> consultarAtor(@PathVariable @NotNull(message = "Campo obrigatório não informado. Favor informar campo ID") Integer id) throws Exception {
         return atorService.consultarAtor(id);
     }
 
@@ -47,6 +59,4 @@ public class AtorController {
     public List<Ator> consultarAtores() throws Exception {
         return atorService.consultarAtores();
     }
-
-
 }

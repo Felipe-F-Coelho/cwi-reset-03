@@ -17,5 +17,6 @@ public interface PersonagemAtorRepository extends CrudRepository<PersonagemAtor,
 
     List<PersonagemAtor> findByNomePersonagemContainsIgnoreCase(String nome);
 
-    List<Ator> findByAtorNomeContainsIgnoreCase(String nome);
+    List<PersonagemAtor> findByAtorNomeContainsIgnoreCase(String nome);
+
 }

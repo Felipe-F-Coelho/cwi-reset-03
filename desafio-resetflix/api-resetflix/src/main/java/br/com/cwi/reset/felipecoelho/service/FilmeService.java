@@ -26,9 +26,6 @@ public class FilmeService {
     @Autowired
     private PersonagemService personagemService;
 
-    @Autowired
-    private PersonagemAtorRepository personagemAtorRepository;
-
 
     // Demais metodos da classe
 
@@ -113,13 +110,7 @@ public class FilmeService {
             }
         }else if(!nomeAtor.isEmpty()){ //Verifica nomeAtor
 
-            List<Ator> listaAtor = personagemService.consultarAtor(nomeAtor);
-
-            List<PersonagemAtor> listaPersonagem = new ArrayList<>();
-
-            for(Ator ator : listaAtor){
-                listaPersonagem = personagemService.consultarPersonagem(ator.getNome());
-            }
+            List<PersonagemAtor> listaPersonagem = personagemService.consultarAtorDoPersonagem(nomeAtor);
 
             List<Filme> retorno = new ArrayList<>();
 
