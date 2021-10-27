@@ -37,7 +37,6 @@ public class FilmeService {
 
         List<Genero> listaValidadorGenero = filmeRequest.getGeneros();
 
-
         if(!estudio.isPresent()){
             throw new ConsultaInvalidaIdException(TipoDominioException.ESTUDIO.getSingular(),filmeRequest.getIdEstudio());
         }
@@ -65,8 +64,6 @@ public class FilmeService {
         final Filme newFilme = new Filme(filmeRequest.getNome(),filmeRequest.getAnoLancamento(),filmeRequest.getCapaFilme(),filmeRequest.getGeneros(),estudio.get(),diretor.get(),listaPersonagens,filmeRequest.getResumo());
         repository.save(newFilme);
     }
-
-
 
     public List<Filme> consultarFilmes(String nomeFilme,String nomeDiretor,String nomePersonagem,String nomeAtor) throws Exception {
 
@@ -127,5 +124,20 @@ public class FilmeService {
             }
         }
         throw new FiltroFilmeNaoEncontradoException(nomeFilme, nomeDiretor, nomePersonagem, nomeAtor);
+    }
+
+    public void removerFilme(Integer id) throws Exception {
+
+        Optional<Filme> filmeSelecionado = repository.findById(id);
+
+        if(!filmeSelecionado.isPresent()){
+            throw new ConsultaInvalidaIdException(TipoDominioException.FILME.getSingular(), id);
+        }
+
+        List<PersonagemAtor> listaPersonagens = filmeSelecionado.get().getPersonagens();
+
+        personagemService.removerPersonagens(listaPersonagens);
+
+        repository.delete(filmeSelecionado.get());
     }
 }

@@ -53,4 +53,10 @@ public class PersonagemService {
     public List<PersonagemAtor> consultarAtorDoPersonagem(String nome){
         return repository.findByAtorNomeContainsIgnoreCase(nome);
     }
+
+    public void removerPersonagens(List<PersonagemAtor> listaPersonagens){
+        for(PersonagemAtor personagemAtor : listaPersonagens){
+            repository.delete(personagemAtor);
+        }
+    }
 }
