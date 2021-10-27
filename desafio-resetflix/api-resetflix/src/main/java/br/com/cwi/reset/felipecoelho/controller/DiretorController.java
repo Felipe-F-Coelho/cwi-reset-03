@@ -1,6 +1,7 @@
 package br.com.cwi.reset.felipecoelho.controller;
 
 import br.com.cwi.reset.felipecoelho.model.Diretor;
+import br.com.cwi.reset.felipecoelho.request.AtorRequest;
 import br.com.cwi.reset.felipecoelho.request.DiretorRequest;
 import br.com.cwi.reset.felipecoelho.service.DiretorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,17 @@ public class DiretorController {
         this.diretorService.criarDiretor(diretorRequest);
     }
 
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void atualizarDiretor(@PathVariable @NotNull(message = "Campo obrigatório não informado. Favor informar campo ID") Integer id,@RequestBody @Valid DiretorRequest diretorRequest) throws Exception {
+        diretorService.atualizarDiretor(id,diretorRequest);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removerDiretores(@PathVariable @NotNull(message = "Campo obrigatório não informado. Favor informar campo ID") Integer id) throws Exception {
+        diretorService.removerDiretor(id);
+    }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -40,7 +52,7 @@ public class DiretorController {
         }
     }
 
-    @GetMapping({"/{id}"})
+    @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<Diretor> consultarDiretor(@NotNull(message = "Campo obrigatório não informado. Favor informar campo ID") @PathVariable Integer id) throws Exception {
         return diretorService.consultarDiretor(id);

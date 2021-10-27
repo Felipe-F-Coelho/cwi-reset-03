@@ -1,5 +1,6 @@
 package br.com.cwi.reset.felipecoelho.service;
 
+import br.com.cwi.reset.felipecoelho.model.Diretor;
 import br.com.cwi.reset.felipecoelho.repository.EstudioRepository;
 import br.com.cwi.reset.felipecoelho.exceptions.*;
 import br.com.cwi.reset.felipecoelho.model.Estudio;
@@ -19,6 +20,14 @@ public class EstudioService {
     // Demais metodos da classe
 
     public void criarEstudio(EstudioRequest estudioRequest) throws Exception {
+
+        List<Estudio> listaEstudio = repository.findAll();
+
+        for(Estudio estudio : listaEstudio){
+            if(estudio.getNome().equalsIgnoreCase(estudioRequest.getNome())){
+                throw new CadastroDuplicadoException(TipoDominioException.ESTUDIO.getSingular(), estudio.getNome());
+            }
+        }
 
         if(repository.findByNomeIgnoreCase(estudioRequest.getNome()) != null){
             throw new CadastroDuplicadoException(TipoDominioException.ESTUDIO.getSingular(), estudioRequest.getNome());

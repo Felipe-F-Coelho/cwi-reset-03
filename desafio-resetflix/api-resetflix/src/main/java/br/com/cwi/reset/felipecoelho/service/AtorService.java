@@ -12,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AtorService {
@@ -30,12 +27,16 @@ public class AtorService {
 
     public void criarAtor(AtorRequest atorRequest) throws Exception {
 
+        List<Ator> listaAtores = repository.findAll();
+
         if(atorRequest.getAnoInicioAtividade() < atorRequest.getDataNascimento().getYear()){
             throw new AnoNascimentoInvalidoExpection(TipoDominioException.ATOR.getSingular());
         }
 
-        if (repository.findByNomeIgnoreCase(atorRequest.getNome()) != null) {
+        for(Ator ator : listaAtores){
+            if(ator.getNome().equalsIgnoreCase(atorRequest.getNome())){
                 throw new CadastroDuplicadoException(TipoDominioException.ATOR.getSingular(), atorRequest.getNome());
+            }
         }
 
         Ator newAtor = new Ator(atorRequest.getNome(),atorRequest.getDataNascimento(),atorRequest.getStatusCarreira(),atorRequest.getAnoInicioAtividade());
@@ -110,12 +111,16 @@ public class AtorService {
 
         Optional<Ator> atualizarAtor = repository.findById(id);
 
+        List<Ator> listaAtores = repository.findAll();
+
         if(!atualizarAtor.isPresent()){
             throw new ConsultaInvalidaIdException(TipoDominioException.ATOR.getSingular(), id);
         }
 
-        if(!repository.findByNomeIgnoreCase(atorRequest.getNome()).isEmpty()){
-            throw new ObjetoJaCadastradoExcepetion(TipoDominioException.ATOR.getSingular(),atorRequest.getNome());
+        for(Ator ator : listaAtores){
+            if(Objects.equals(ator.getNome(), atorRequest.getNome()) && !Objects.equals(atualizarAtor.get().getId(), ator.getId())){
+                throw new ObjetoJaCadastradoExcepetion(TipoDominioException.ATOR.getSingular(),atorRequest.getNome());
+            }
         }
 
         atualizarAtor.get().setAnoInicioAtividade(atorRequest.getAnoInicioAtividade());
