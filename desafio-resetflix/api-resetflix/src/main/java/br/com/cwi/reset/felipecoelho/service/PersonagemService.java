@@ -1,7 +1,6 @@
 package br.com.cwi.reset.felipecoelho.service;
 
 import br.com.cwi.reset.felipecoelho.model.PersonagemAtor;
-import br.com.cwi.reset.felipecoelho.repository.AtorRepository;
 import br.com.cwi.reset.felipecoelho.exceptions.ConsultaInvalidaIdException;
 import br.com.cwi.reset.felipecoelho.exceptions.MesmoObjetoMaisDeUmaVez;
 import br.com.cwi.reset.felipecoelho.exceptions.TipoDominioException;
@@ -11,7 +10,6 @@ import br.com.cwi.reset.felipecoelho.request.PersonagemRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,13 +19,13 @@ public class PersonagemService {
     @Autowired
     private PersonagemAtorRepository repository;
     @Autowired
-    private AtorRepository atorRepository;
+    private AtorService atorService;
 
     // Demais metodos da classe
 
     public PersonagemAtor criarPersonagem(PersonagemRequest personagemRequest) throws Exception {
 
-        Optional<Ator> retorno = atorRepository.findById(personagemRequest.getIdAtor());
+        Optional<Ator> retorno = atorService.consultarAtor(personagemRequest.getIdAtor());
 
         if (!retorno.isPresent()) {
             throw new ConsultaInvalidaIdException(TipoDominioException.PERSONAGEM.getSingular(), personagemRequest.getIdAtor());
@@ -38,16 +36,12 @@ public class PersonagemService {
             throw new MesmoObjetoMaisDeUmaVez(TipoDominioException.ATOR.getSingular(), TipoDominioException.PERSONAGEM.getSingular());
         }
 
-        Ator atorSelecionado = atorRepository.findByNome(retorno.get().getNome());
+        Ator atorSelecionado = atorService.consultarAtorNome(retorno.get().getNome());
 
         final PersonagemAtor newPersonagem = new PersonagemAtor(atorSelecionado, personagemRequest.getNomePersonagem(), personagemRequest.getDescricaoPersonagem(), personagemRequest.getTipoAtuacao());
         repository.save(newPersonagem);
 
         return newPersonagem;
-    }
-
-    public List<PersonagemAtor> consultarPersonagem(String nome) {
-        return repository.findByNomePersonagemContainsIgnoreCase(nome);
     }
 
     public List<PersonagemAtor> consultarAtorDoPersonagem(String nome){

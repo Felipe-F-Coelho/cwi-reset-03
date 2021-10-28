@@ -1,6 +1,5 @@
 package br.com.cwi.reset.felipecoelho.repository;
 
-import br.com.cwi.reset.felipecoelho.model.Ator;
 import br.com.cwi.reset.felipecoelho.model.PersonagemAtor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

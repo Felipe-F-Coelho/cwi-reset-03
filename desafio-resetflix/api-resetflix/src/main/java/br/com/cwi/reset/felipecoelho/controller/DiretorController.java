@@ -1,7 +1,6 @@
 package br.com.cwi.reset.felipecoelho.controller;
 
 import br.com.cwi.reset.felipecoelho.model.Diretor;
-import br.com.cwi.reset.felipecoelho.request.AtorRequest;
 import br.com.cwi.reset.felipecoelho.request.DiretorRequest;
 import br.com.cwi.reset.felipecoelho.service.DiretorService;
 import org.springframework.beans.factory.annotation.Autowired;

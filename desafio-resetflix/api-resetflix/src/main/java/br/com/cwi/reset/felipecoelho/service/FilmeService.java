@@ -18,10 +18,10 @@ public class FilmeService {
     private FilmeRepository repository;
 
     @Autowired
-    private EstudioRepository estudioRepository;
+    private EstudioService estudioService;
 
     @Autowired
-    private DiretorRepository diretorRepository;
+    private DiretorService diretorService;
 
     @Autowired
     private PersonagemService personagemService;
@@ -31,9 +31,9 @@ public class FilmeService {
 
     public void criarFilme(FilmeRequest filmeRequest) throws Exception {
 
-        Optional<Estudio> estudio = estudioRepository.findById(filmeRequest.getIdEstudio());
+        Optional<Estudio> estudio = estudioService.consultarEstudio(filmeRequest.getIdEstudio());
 
-        Optional<Diretor> diretor = diretorRepository.findById(filmeRequest.getIdDiretor());
+        Optional<Diretor> diretor = diretorService.consultarDiretor(filmeRequest.getIdDiretor());
 
         List<Genero> listaValidadorGenero = filmeRequest.getGeneros();
 
@@ -70,24 +70,21 @@ public class FilmeService {
         List<Filme> listaFilmes = repository.findAll();
 
         if(listaFilmes.isEmpty()){
-            throw new ListaConsultaVaziaExceptions(TipoDominioException.FILME.getSingular(), TipoDominioException.FILME.getPlural());
+            throw new ListaConsultaVaziaExceptions(TipoDominioException.FILME.getSingular(),TipoDominioException.FILME.getPlural());
         }
 
         if(!nomeFilme.isEmpty()){ //Verifica nomeFilme
 
-            List<Filme> retorno = repository.findByNomeContainsIgnoreCase(nomeFilme);
-
-            if(!retorno.isEmpty()){
-                return retorno;
+            if(!repository.findByNomeContainsIgnoreCase(nomeFilme).isEmpty()){
+                return repository.findByNomeContainsIgnoreCase(nomeFilme);
             }
 
         }else if(!nomeDiretor.isEmpty()){ //Verifica nomeDiretor
 
-            List<Filme> retorno = repository.findByDiretorNomeContainsIgnoreCase(nomeDiretor);
-
-            if(!retorno.isEmpty()){
-                return retorno;
+            if(!consultarDiretorFilme(nomeDiretor).isEmpty()){
+                return consultarDiretorFilme(nomeDiretor);
             }
+
         }else if(!nomePersonagem.isEmpty()){ //Verifica nomePersonagem
 
             List<Filme> retorno = new ArrayList<>();
@@ -100,10 +97,10 @@ public class FilmeService {
                     }
                 }
             }
-
             if(!retorno.isEmpty()){
                 return retorno;
             }
+
         }else if(!nomeAtor.isEmpty()){ //Verifica nomeAtor
 
             List<Filme> retorno = new ArrayList<>();
@@ -137,5 +134,9 @@ public class FilmeService {
         personagemService.removerPersonagens(listaPersonagens);
 
         repository.delete(filmeSelecionado.get());
+    }
+
+    public List<Filme> consultarDiretorFilme(String nomeDiretor){
+        return repository.findByDiretorNomeContainsIgnoreCase(nomeDiretor);
     }
 }

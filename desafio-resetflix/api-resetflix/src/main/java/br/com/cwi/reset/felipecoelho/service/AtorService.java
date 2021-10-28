@@ -2,15 +2,12 @@ package br.com.cwi.reset.felipecoelho.service;
 
 import br.com.cwi.reset.felipecoelho.exceptions.*;
 import br.com.cwi.reset.felipecoelho.repository.AtorRepository;
-import br.com.cwi.reset.felipecoelho.repository.PersonagemAtorRepository;
 import br.com.cwi.reset.felipecoelho.response.AtorEmAtividade;
 import br.com.cwi.reset.felipecoelho.model.Ator;
 import br.com.cwi.reset.felipecoelho.model.StatusCarreira;
 import br.com.cwi.reset.felipecoelho.request.AtorRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.*;
 
@@ -21,7 +18,7 @@ public class AtorService {
     private AtorRepository repository;
 
     @Autowired
-    private PersonagemAtorRepository personagemAtorRepository;
+    private PersonagemService personagemAtorService;
 
     // Demais métodos da classe
 
@@ -43,7 +40,6 @@ public class AtorService {
         repository.save(newAtor);
     }
 
-
     public List<AtorEmAtividade> listarAtoresEmAtividade() throws Exception {
 
         List<Ator> listaAtores = repository.findAllByStatusCarreira(StatusCarreira.EM_ATIVIDADE);
@@ -60,7 +56,6 @@ public class AtorService {
 
         return retorno;
     }
-
 
     public List<AtorEmAtividade> listarAtoresEmAtividade(String filtroNome) throws Exception {
 
@@ -84,7 +79,6 @@ public class AtorService {
         return retorno;
     }
 
-
     public Optional<Ator> consultarAtor(Integer id) throws Exception {
 
         Optional<Ator> ator = repository.findById(id);
@@ -94,7 +88,6 @@ public class AtorService {
         }
         return ator;
     }
-
 
     public List<Ator> consultarAtores() throws Exception {
 
@@ -139,11 +132,15 @@ public class AtorService {
             throw new ConsultaInvalidaIdException(TipoDominioException.ATOR.getSingular(), id);
         }
 
-        if(!personagemAtorRepository.findByAtorNomeContainsIgnoreCase(atorSelecionado.get().getNome()).isEmpty()){
+        if(!personagemAtorService.consultarAtorDoPersonagem(atorSelecionado.get().getNome()).isEmpty()){
             throw new DeleteComVinculoException(TipoDominioException.PERSONAGEM.getPlural(),TipoDominioException.ATOR.getSingular());
         }
 
         repository.delete(atorSelecionado.get());
+    }
+
+    public Ator consultarAtorNome(String nome){
+        return repository.findByNome(nome);
     }
 
 }

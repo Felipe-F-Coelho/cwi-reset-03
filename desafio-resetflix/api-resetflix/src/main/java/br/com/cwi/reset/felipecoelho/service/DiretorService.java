@@ -1,11 +1,9 @@
 package br.com.cwi.reset.felipecoelho.service;
 
-import br.com.cwi.reset.felipecoelho.model.Ator;
 import br.com.cwi.reset.felipecoelho.repository.DiretorRepository;
 import br.com.cwi.reset.felipecoelho.exceptions.*;
 import br.com.cwi.reset.felipecoelho.model.Diretor;
 
-import br.com.cwi.reset.felipecoelho.repository.FilmeRepository;
 import br.com.cwi.reset.felipecoelho.request.DiretorRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +19,7 @@ public class DiretorService {
     private DiretorRepository repository;
 
     @Autowired
-    private FilmeRepository filmeRepository;
+    private FilmeService filmeService;
 
     // Demais métodos da classe
 
@@ -113,7 +111,7 @@ public class DiretorService {
             throw new ConsultaInvalidaIdException(TipoDominioException.DIRETOR.getSingular(), id);
         }
 
-        if(!filmeRepository.findByDiretorNomeContainsIgnoreCase(diretorSelecionado.get().getNome()).isEmpty()){
+        if(!filmeService.consultarDiretorFilme(diretorSelecionado.get().getNome()).isEmpty()){
             throw new DeleteComVinculoException(TipoDominioException.FILME.getPlural(),TipoDominioException.DIRETOR.getSingular());
         }
 

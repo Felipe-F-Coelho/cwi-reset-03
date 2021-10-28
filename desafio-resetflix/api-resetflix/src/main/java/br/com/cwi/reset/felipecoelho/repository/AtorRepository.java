@@ -10,8 +10,6 @@ import java.util.List;
 @Repository
 public interface AtorRepository extends CrudRepository<Ator,Integer> {
 
-    String findByNomeIgnoreCase(String nome);
-
     List<Ator> findAllByStatusCarreira(StatusCarreira statusCarreira);
 
     List<Ator> findAll();

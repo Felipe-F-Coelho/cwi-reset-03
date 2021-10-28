@@ -1,6 +1,5 @@
 package br.com.cwi.reset.felipecoelho.service;
 
-import br.com.cwi.reset.felipecoelho.model.Diretor;
 import br.com.cwi.reset.felipecoelho.repository.EstudioRepository;
 import br.com.cwi.reset.felipecoelho.exceptions.*;
 import br.com.cwi.reset.felipecoelho.model.Estudio;
