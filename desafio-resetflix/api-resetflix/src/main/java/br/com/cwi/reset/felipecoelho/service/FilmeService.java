@@ -90,35 +90,33 @@ public class FilmeService {
             }
         }else if(!nomePersonagem.isEmpty()){ //Verifica nomePersonagem
 
-            List<PersonagemAtor> buscaPersonagem = personagemService.consultarPersonagem(nomePersonagem);
-
             List<Filme> retorno = new ArrayList<>();
 
-            for (int i = 0; i < listaFilmes.size();i++) {
-                List<PersonagemAtor> identificadorListagem = listaFilmes.get(i).getPersonagens();
-                for(PersonagemAtor personagemAtor : buscaPersonagem){
-                    if (Objects.equals(personagemAtor.getNomePersonagem(), identificadorListagem.get(i).getNomePersonagem())) {
-                        retorno.add(listaFilmes.get(i));
+            for(Filme filme : listaFilmes){
+                List<PersonagemAtor> buscarPersonagem = filme.getPersonagens();
+                for(PersonagemAtor personagemAtor : buscarPersonagem){
+                    if(personagemAtor.getNomePersonagem().toLowerCase(Locale.ROOT).contains(nomePersonagem.toLowerCase(Locale.ROOT))){
+                        retorno.add(filme);
                     }
                 }
             }
+
             if(!retorno.isEmpty()){
                 return retorno;
             }
         }else if(!nomeAtor.isEmpty()){ //Verifica nomeAtor
 
-            List<PersonagemAtor> listaPersonagem = personagemService.consultarAtorDoPersonagem(nomeAtor);
-
             List<Filme> retorno = new ArrayList<>();
 
-            for (int i = 0; i < listaFilmes.size();i++) {
-                List<PersonagemAtor> identificadorListagem = listaFilmes.get(i).getPersonagens();
-                for(PersonagemAtor personagemAtor : listaPersonagem){
-                    if (Objects.equals(personagemAtor.getNomePersonagem(), identificadorListagem.get(i).getNomePersonagem())) {
-                        retorno.add(listaFilmes.get(i));
+            for(Filme filme : listaFilmes){
+                List<PersonagemAtor> buscarPersonagem = filme.getPersonagens();
+                for(PersonagemAtor personagensAtor : buscarPersonagem){
+                    if(personagensAtor.getAtor().getNome().toLowerCase(Locale.ROOT).contains(nomeAtor.toLowerCase(Locale.ROOT))){
+                        retorno.add(filme);
                     }
                 }
             }
+
             if(!retorno.isEmpty()){
                 return retorno;
             }
